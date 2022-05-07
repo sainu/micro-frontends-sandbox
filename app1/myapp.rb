@@ -24,6 +24,10 @@ get '/health' do
 end
 
 get '/' do
+  unless @user_signed_in
+    redirect 'http://lp.lvh.me/app1.html'
+  end
+
   erb :index
 end
 
