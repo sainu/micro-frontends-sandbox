@@ -40,5 +40,5 @@ end
 
 post '/logout' do
   session[:user_id] = nil
-  redirect 'http://lp.lvh.me/app1.html'
+  redirect 'http://auth.lvh.me/oauth/end_session?redirect_url=http://lp.lvh.me/app1.html'
 end

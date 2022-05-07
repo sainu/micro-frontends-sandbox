@@ -88,6 +88,12 @@ get '/oauth/authz' do
   end
 end
 
+get '/oauth/end_session' do
+  redirect_url = params[:redirect_url]
+  session[:user_id] = nil
+  redirect redirect_url
+end
+
 get '/api/users/:id' do
   user = fetch_users.find { |u| u.id == params[:id].to_i }
   user.to_h.to_json
