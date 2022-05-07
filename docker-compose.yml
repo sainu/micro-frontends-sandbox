@@ -12,6 +12,14 @@ services:
     depends_on:
       - app1
 
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    command: bash -c "APP_ENV=development bundle exec ruby myapp.rb -p 3000 -o 0.0.0.0"
+    volumes:
+      - ./auth:/myapp
+
   app1:
     build:
       context: ./app1

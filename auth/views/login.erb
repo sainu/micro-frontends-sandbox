@@ -1,0 +1,15 @@
+<div class="row justify-content-center">
+  <form action="/login" method="post" class="col-3">
+    <div class="mb-3">
+      <label for="exampleInputName" class="form-label">ユーザー名</label>
+      <input type="text" name="name" class="form-control" id="exampleInputName" value="<%= @form&.name %>">
+      <div id="nameError" class="form-text<%= @form.error ? " text-danger" : "" %>">
+        ログインするには、「<%= @users.map(&:name).join('」「') %>」のいずれかを入力してください。
+      </div>
+    </div>
+    <% if @form&.redirect_url %>
+      <input type="hidden" name="redirect_url" value="<%= @form.redirect_url %>">
+    <% end %>
+    <button type="submit" class="btn btn-primary">送信</button>
+  </form>
+</div>
