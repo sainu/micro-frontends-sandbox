@@ -5,7 +5,8 @@ services:
     image: nginx:1.18.0-alpine
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/sites/app1.conf:/etc/nginx/sites-enabled/app1.conf:ro
+      - ./nginx/sites:/etc/nginx/sites-enabled
+      - ./lp:/var/www/lp
     ports:
       - "80:80"
     depends_on:
