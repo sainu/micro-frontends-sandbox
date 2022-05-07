@@ -1,5 +1,18 @@
 require 'sinatra'
 require 'sinatra/reloader' if settings.development?
+require 'sinatra/flash'
+require 'json'
+require 'net/http'
+
+set :sessions, domain: 'app1.lvh.me'
+
+User = Struct.new('User', :id, :name, keyword_init: true)
+
+def fetch_user(id)
+  uri = URI.parse("http://auth:3000/api/users/#{id}")
+  response = Net::HTTP.get_response(uri)
+  User.new(**JSON.parse(response.body))
+end
 
 get '/health' do
   'OK'
@@ -10,7 +23,9 @@ get '/' do
 end
 
 get '/callback' do
-  # TODO: login
+  user = fetch_user(params[:user_id])
+  session[:user_id] = user.id
+  flash[:notice] = 'ログインしました'
   redirect '/'
 end
 

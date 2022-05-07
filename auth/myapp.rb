@@ -2,6 +2,7 @@ require 'sinatra'
 require 'sinatra/reloader' if settings.development?
 require 'rack/flash'
 require 'logger'
+require 'json'
 
 set :sessions, domain: 'auth.lvh.me'
 use Rack::Flash
@@ -60,7 +61,7 @@ post '/login' do
 
   if @form&.redirect_url
     # You must prevent open redirect attacks in the production environment
-    redirect @form.redirect_url
+    redirect "#{@form.redirect_url}?user_id=#{user.id}"
   else
     flash[:notice] = 'ログインしました'
     redirect '/'
@@ -72,4 +73,22 @@ post '/logout' do
 
   flash[:notice] = 'ログアウトしました'
   redirect '/'
+end
+
+get '/oauth/authz' do
+  redirect_url = params[:redirect_url]
+
+  if params[:prompt] == 'login'
+    session[:user_id] = nil
+    redirect "/login?redirect_url=#{redirect_url}"
+  elsif params[:prompt] == 'none' && @user_signed_in
+    redirect redirect_url
+  else
+    redirect "/login?redirect_url=#{redirect_url}"
+  end
+end
+
+get '/api/users/:id' do
+  user = fetch_users.find { |u| u.id == params[:id].to_i }
+  user.to_h.to_json
 end

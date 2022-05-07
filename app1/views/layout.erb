@@ -34,6 +34,15 @@
       </div>
     </header>
 
+    <% flash_classes = { notice: 'success', alert: 'danger' } %>
+    <% flash.each do |key, message| %>
+      <div class="container">
+        <div class="alert alert-<%= flash_classes[key] %>" role="alert">
+          <%= message %>
+        </div>
+      </div>
+    <% end %>
+
     <main class="container">
       <%= yield %>
     </main>
