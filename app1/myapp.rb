@@ -39,5 +39,6 @@ get '/callback' do
 end
 
 post '/logout' do
-  # TODO: logout
+  session[:user_id] = nil
+  redirect 'http://lp.lvh.me/app1.html'
 end

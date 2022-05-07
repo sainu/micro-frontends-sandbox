@@ -26,7 +26,11 @@
                 <%= @current_user.name %>
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li>
+                  <form action='/logout' method='post'>
+                    <input type='submit' value='ログアウト' class="dropdown-item">
+                  </form>
+                </li>
               </ul>
             </div>
           </div>
