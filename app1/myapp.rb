@@ -14,6 +14,11 @@ def fetch_user(id)
   User.new(**JSON.parse(response.body))
 end
 
+before do
+  @current_user = session[:user_id] ? fetch_user(session[:user_id]) : nil
+  @user_signed_in = !!@current_user
+end
+
 get '/health' do
   'OK'
 end
