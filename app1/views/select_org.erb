@@ -1,0 +1,15 @@
+<h3>利用する組織を選んでください</h3>
+
+<form action='/select_org' method='post'>
+  <% @orgs.each do |org| %>
+    <div class='form-check mb-3'>
+      <input class='form-check-input' type='radio' name='org_id' value='<%= org.id %>' id='orgId<%= org.id %>'>
+      <label class='form-check-label' for='orgId<%= org.id %>'><%= org.name %></label>
+    </div>
+  <% end %>
+  <% if @error %>
+    <div class="form-text text-danger mb-3"><%= @error %></div>
+  <% end %>
+  <input type="hidden" name="authenticity_token" value="<%= Rack::Protection::AuthenticityToken.token(session) %>" />
+  <button type="submit" class="btn btn-primary">送信</button>
+</form>

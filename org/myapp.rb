@@ -25,3 +25,8 @@ end
 get '/api/users/:user_id/orgs' do
   search_orgs(params[:user_id].to_i).map(&:to_h).to_json
 end
+
+get '/api/users/:user_id/orgs/:id' do
+  user_orgs = search_orgs(params[:user_id].to_i)
+  user_orgs.find { |org| org.id == params[:id].to_i }.to_h.to_json
+end

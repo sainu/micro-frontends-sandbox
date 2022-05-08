@@ -15,9 +15,16 @@
       <header class="p-3 mb-3 border-bottom">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <div class="col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-              <span class="fs-4">アプリ1</span>
-            </a>
+            <div class="d-flex align-items-center">
+              <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+                <span class="fs-4">アプリ1</span>
+              </a>
+              <% if @org_signed_in %>
+                <span href="#" class="d-block badge bg-secondary ms-3">
+                  <%= @current_org.name %>
+                </span>
+              <% end %>
+            </div>
           </div>
 
           <div class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -29,6 +36,7 @@
                 <li>
                   <form action='/logout' method='post'>
                     <input type='submit' value='ログアウト' class="dropdown-item">
+                    <input type="hidden" name="authenticity_token" value="<%= Rack::Protection::AuthenticityToken.token(session) %>" />
                   </form>
                 </li>
               </ul>
