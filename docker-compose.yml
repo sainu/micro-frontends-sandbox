@@ -13,6 +13,7 @@ services:
       - auth
       - org
       - app1
+      - notification-api
 
   auth:
     build:
@@ -29,6 +30,13 @@ services:
     command: bash -c "APP_ENV=development bundle exec ruby myapp.rb -p 3000 -o 0.0.0.0"
     volumes:
       - ./org:/myapp
+
+  notification-api:
+    build:
+      context: ./notification-api
+      dockerfile: Dockerfile
+    volumes:
+      - ./notification-api:/myapp
 
   app1:
     build:
