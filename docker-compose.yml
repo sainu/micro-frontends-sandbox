@@ -11,6 +11,7 @@ services:
       - "80:80"
     depends_on:
       - auth
+      - org
       - app1
 
   auth:
@@ -20,6 +21,14 @@ services:
     command: bash -c "APP_ENV=development bundle exec ruby myapp.rb -p 3000 -o 0.0.0.0"
     volumes:
       - ./auth:/myapp
+
+  org:
+    build:
+      context: ./org
+      dockerfile: Dockerfile
+    command: bash -c "APP_ENV=development bundle exec ruby myapp.rb -p 3000 -o 0.0.0.0"
+    volumes:
+      - ./org:/myapp
 
   app1:
     build:
