@@ -14,6 +14,7 @@ services:
       - org
       - app1
       - notification-api
+      - notification-web
 
   auth:
     build:
@@ -37,6 +38,13 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./notification-api:/myapp
+
+  notification-web:
+    build:
+      context: ./notification-web
+      dockerfile: Dockerfile
+    volumes:
+      - ./notification-web:/myapp
 
   app1:
     build:
